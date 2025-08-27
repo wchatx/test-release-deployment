@@ -45,8 +45,9 @@ jobs:
         run: |
           find dags -name "*.py" | xargs pylint
 
-  sync:
-    name: DAG Sync Always
+  dev:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    name: DAG Sync Dev
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -54,9 +55,8 @@ jobs:
 
   tag:
     if: startsWith(github.ref, 'refs/tags/')
-    name: DAG Sync on Tag
+    name: DAG Sync Prod
     runs-on: ubuntu-latest
-    needs: sync
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
