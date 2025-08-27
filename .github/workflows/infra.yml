@@ -1,9 +1,19 @@
-name: Merge
+name: Infra
 
 on:
   push:
     branches:
       - main
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
+    paths:
+      - infra/**
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - infra/**
 
 permissions:
   id-token: write
@@ -11,12 +21,9 @@ permissions:
   pull-requests: write
 
 jobs:
-  build:
+  infra:
     name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: PR BUILD DEMO
-        run: echo "This is a placeholder for the build process."
