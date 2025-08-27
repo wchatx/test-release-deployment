@@ -8,12 +8,14 @@ on:
       - '[0-9]+.[0-9]+.[0-9]+'
     paths:
       - dags/**
+      - .github/workflows/dags.yml
 
   pull_request:
     branches:
       - main
     paths:
       - dags/**
+      - .github/workflows/dags.yml
 
 permissions:
   id-token: write
