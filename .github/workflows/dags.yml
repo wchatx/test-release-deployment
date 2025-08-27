@@ -23,8 +23,25 @@ permissions:
   pull-requests: write
 
 jobs:
-  sync:
-    name: DAG Sync
+  test:
+    name: DAG Linting
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+  dev:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    name: DAG Sync Dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+  tag:
+    if: startsWith(github.ref, 'refs/tags/')
+    name: DAG Sync Prod
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
