@@ -21,11 +21,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Get Last Tag
+        id: last_tag
+        run: echo "tag=$(git describe --tags --abbrev=0 HEAD^)" >> $GITHUB_OUTPUT
+
       - name: Detect changes
         uses: dorny/paths-filter@v3
         id: changes
         with:
-          base: ${{ github.ref }}
+          base: ${{ steps.last_tag.outputs.tag }}
           filters: |
             dags:
               - 'dags/**'
