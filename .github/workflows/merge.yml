@@ -1,9 +1,9 @@
-name: Release
+name: Merge
 
 on:
   push:
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+'
+    branches:
+      - main
 
 permissions:
   id-token: write
@@ -33,13 +33,6 @@ jobs:
               - 'infra/**'
               - '.github/workflows/infra.yml'
 
-      - name: Publish GitHub release
-        uses: softprops/action-gh-release@v2
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          generate_release_notes: true
-
   dags:
     name: DAGs Release
     runs-on: ubuntu-latest
@@ -57,4 +50,3 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
